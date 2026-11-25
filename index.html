@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shoot your shot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { background: lightyellow; font-family: Arial; }
+h1 { color: darkgreen; }
+textarea { width: 100%; }
+</style>
+</head>
+<body>
+<form id="shootForm">
+<br><br>
+<h1>Shoot your shot</h1>
+<p>Please make sure you answer each and every question faithfully to get an eligible match</p>
+<br>
+<p>What is your gender?</p>
+<input type="radio" id="male" name="gender" value="Male">
+<label for="male">Male</label>
+<br>
+<input type="radio" id="Female" name="gender" value="Female">
+<label for="Female">Female</label>
+<br>
+<input type ="radio" id="other" value ="Other" name ="gender">
+<label for ="Other">Other</label>
+<br>
+<p>Are you ?</p>
+<input type ="radio" id="Gay" value ="Gay" name ="direction" required>
+<label for ="Gay">Gay</label>
+<br>
+<input type ="radio" id="Straight" value ="Straight" name="direction" required>
+<label for ="Straight">Straight</label>
+<br>
+<p> What is your HIV status</p>
+<input type ="radio" id ="Positive" value ="Positive" name ="status">
+<label for ="Positive">Positive</label>
+<br>
+<input type ="radio" id ="Negative" value ="Negative" name ="status">
+<label for ="Negative">Negative</label>
+<br>
+<input type ="radio" id ="Notsure" value ="Notsure" name ="status">
+<label for ="Not sure">Not sure</label>
+<br>
+<p>If "MALE" are you;</p>
+<p>HEIGHT</p>
+<input type ="radio" id ="Tall" value ="Tall" name ="height">
+<label for ="Tall">Tall</label>
+<input type ="radio" id ="Short" value ="Short" name ="height">
+<label for ="Short">Short</label>
+<input type ="radio" id ="Medium" value ="Medium" name ="height">
+<label for ="Medium">Medium</label>
+<p>COLOR</p>
+<input type ="radio" id ="Dark" value ="Dark" name ="color">
+<label for ="Dark">Dark</label>
+<input type ="radio" id ="Chocolate" value ="Chocolate" name ="color">
+<label for ="Chocolate">Chocolate</label>
+<input type ="radio" id ="Brown" value ="Brown" name ="color">
+<label for ="Brown">Brown</label>
+<p>FINANCIAL STATUS</p>
+<input type ="radio" id ="stabe" value ="stable" name ="Income">
+<label for ="Stable">Stable</label>
+<input type ="radio" id ="Unstable" value ="Unstable" name ="Income">
+<label for ="Unstable">Unstable</label>
+<input type ="radio" id ="Don'tknow" value ="Don't Know" name ="Income">
+<label for ="Don'tKnow">Don't Know</label>
+<p>TYPE OF LADY YOU WANT</p>
+<textarea name="preferences" id="preferences" cols="100" rows="10" placeholder="Describe the characteristics you need from her">
+</textarea>
+<br>
+<label for="fullname">Full Name:</label>
+<input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
+<br>
+<label for="contact">Contact:</label>
+<input type="tel" id="contact" name="contact" placeholder="Phone number" required>
+
+<br>
+<input type ="submit" value ="send">
+<br>
+</form>
+<script>
+document.getElementById("shootForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var d = new FormData(this);
+  var get = function (k) { return d.get(k) || "-"; };
+
+  var text =
+    "*SHOOT YOUR SHOT*\n" +
+    "Name: " + get("fullname") + "\n" +
+    "Contact: " + get("contact") + "\n" +
+    "Gender: " + get("gender") + "\n" +
+    "Direction: " + get("direction") + "\n" +
+    "HIV status: " + get("status") + "\n" +
+    "Height: " + get("height") + "\n" +
+    "Color: " + get("color") + "\n" +
+    "Financial status: " + get("Income") + "\n" +
+    "Type of lady: " + get("preferences");
+
+  window.location.href =
+    "https://wa.me/256754766355?text=" + encodeURIComponent(text);
+});
+</script>
+
+</body>
+</html>
