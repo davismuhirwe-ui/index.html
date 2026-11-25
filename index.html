@@ -42,7 +42,7 @@ textarea { width: 100%; }
 <input type ="radio" id ="Notsure" value ="Notsure" name ="status">
 <label for ="Not sure">Not sure</label>
 <br>
-<p>If "MALE" are you;</p>
+<div id="maleSection" hidden>
 <p>HEIGHT</p>
 <input type ="radio" id ="Tall" value ="Tall" name ="height">
 <label for ="Tall">Tall</label>
@@ -67,6 +67,34 @@ textarea { width: 100%; }
 <p>TYPE OF LADY YOU WANT</p>
 <textarea name="preferences" id="preferences" cols="100" rows="10" placeholder="Describe the characteristics you need from her">
 </textarea>
+</div>
+<div id="femaleSection" hidden>
+<p>HEIGHT</p>
+<input type="radio" id="fTall" name="fheight" value="Tall">
+<label for="fTall">Tall</label>
+<input type="radio" id="fShort" name="fheight" value="Short">
+<label for="fShort">Short</label>
+<input type="radio" id="fMedium" name="fheight" value="Medium">
+<label for="fMedium">Medium</label>
+
+<p>COLOR</p>
+<input type="radio" id="fDark" name="fcolor" value="Dark">
+<label for="fDark">Dark</label>
+<input type="radio" id="fChocolate" name="fcolor" value="Chocolate">
+<label for="fChocolate">Chocolate</label>
+<input type="radio" id="fBrown" name="fcolor" value="Brown">
+<label for="fBrown">Brown</label>
+
+<p>FINANCIAL STATUS</p>
+<input type="radio" id="fStable" name="fincome" value="Stable">
+<label for="fStable">Stable</label>
+<input type="radio" id="fUnstable" name="fincome" value="Unstable">
+<label for="fUnstable">Unstable</label>
+
+<p>TYPE OF MAN YOU WANT</p>
+<textarea name="fpreferences" id="fpreferences" rows="10" placeholder="Describe the characteristics you need from him"></textarea>
+</div>
+
 <br>
 <label for="fullname">Full Name:</label>
 <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
@@ -79,22 +107,46 @@ textarea { width: 100%; }
 <br>
 </form>
 <script>
+var maleBox = document.getElementById("maleSection");
+var femaleBox = document.getElementById("femaleSection");
+
+function toggleSections() {
+  var g = document.querySelector('input[name="gender"]:checked');
+  var v = g ? g.value : "";
+  maleBox.hidden = (v !== "Male");
+  femaleBox.hidden = (v !== "Female");
+}
+document.querySelectorAll('input[name="gender"]').forEach(function (r) {
+  r.addEventListener("change", toggleSections);
+});
+
 document.getElementById("shootForm").addEventListener("submit", function (e) {
   e.preventDefault();
   var d = new FormData(this);
   var get = function (k) { return d.get(k) || "-"; };
+  var g = get("gender");
+  var extra = "";
+
+  if (g === "Male") {
+    extra = "Height: " + get("height") + "\n" +
+            "Color: " + get("color") + "\n" +
+            "Financial status: " + get("Income") + "\n" +
+            "Type of lady: " + get("preferences") + "\n";
+  } else if (g === "Female") {
+    extra = "Height: " + get("fheight") + "\n" +
+            "Color: " + get("fcolor") + "\n" +
+            "Financial status: " + get("fincome") + "\n" +
+            "Type of man: " + get("fpreferences") + "\n";
+  }
 
   var text =
     "*SHOOT YOUR SHOT*\n" +
     "Name: " + get("fullname") + "\n" +
     "Contact: " + get("contact") + "\n" +
-    "Gender: " + get("gender") + "\n" +
+    "Gender: " + g + "\n" +
     "Direction: " + get("direction") + "\n" +
     "HIV status: " + get("status") + "\n" +
-    "Height: " + get("height") + "\n" +
-    "Color: " + get("color") + "\n" +
-    "Financial status: " + get("Income") + "\n" +
-    "Type of lady: " + get("preferences");
+    extra;
 
   window.location.href =
     "https://wa.me/256754766355?text=" + encodeURIComponent(text);
